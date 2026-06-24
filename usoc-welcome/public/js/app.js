@@ -51,7 +51,7 @@ function randomFrom(arr) {
    ============================================================ */
 function launchConfetti() {
   if (typeof confetti !== 'function') return;
-  const end    = Date.now() + 2800;
+  const end    = Date.now() + 3000;
   const colors = ['#0B2E63', '#1F5DAA', '#FFD700', '#ffffff', '#4CAF50'];
   (function frame() {
     confetti({ particleCount: 5, angle: 60,  spread: 55, origin: { x: 0 }, colors });
