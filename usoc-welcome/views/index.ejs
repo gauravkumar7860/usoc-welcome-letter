@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="USoC Orientation Welcome Letter Generator — Lamrin Tech Skills University Punjab" />
+  <title>USoC Welcome Letter | Lamrin Tech Skills University Punjab</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <!-- AOS Animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- Background decorations -->
+  <div class="bg-pattern" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+
+  <div class="app-wrapper">
+
+    <!-- PAGE HEADER -->
+    <header class="page-header" data-aos="fade-down">
+      <div class="university-badge">
+        <div class="badge-dot"></div>
+        <span>Lamrin Tech Skills University Punjab</span>
+        <div class="badge-dot"></div>
+      </div>
+      <h1>University School of <span>Computing</span></h1>
+      <p>Orientation Welcome Letter Generator</p>
+    </header>
+
+    <!-- FORM SECTION -->
+    <section id="form-section" data-aos="fade-up" data-aos-delay="100">
+      <div class="form-card">
+        <div class="form-card-header">
+          <h2>Student Information</h2>
+          <p>Please fill in your details to generate your personalised welcome letter.</p>
+        </div>
+
+        <div class="divider-line"><span>✦</span></div>
+
+        <form id="welcome-form" novalidate>
+
+          <div class="field-group">
+            <label for="student-name">Student Name</label>
+            <input type="text" id="student-name" name="studentName" placeholder="Enter your full name" autocomplete="name" required />
+          </div>
+
+          <div class="field-group">
+            <label for="father-name">Father's Name</label>
+            <input type="text" id="father-name" name="fatherName" placeholder="Enter your father's full name" required />
+          </div>
+
+          <div class="field-group">
+            <label>Gender</label>
+            <div class="gender-options">
+              <div class="gender-option">
+                <input type="radio" id="gender-male" name="gender" value="Male" checked />
+                <label for="gender-male">♂ Male</label>
+              </div>
+              <div class="gender-option">
+                <input type="radio" id="gender-female" name="gender" value="Female" />
+                <label for="gender-female">♀ Female</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="course">Course / Programme</label>
+            <div class="select-wrapper">
+              <select id="course" name="course" required>
+                <option value="" disabled selected>— Select your course —</option>
+                <option value="BCA (Cyber Security)">BCA (Cyber Security)</option>
+                <option value="BCA (AI &amp; ML)">BCA (AI &amp; ML)</option>
+                <option value="BCA (Regular)">BCA (Regular)</option>
+                <option value="PGDCA">PGDCA</option>
+                <option value="MCA">MCA</option>
+                <option value="B.Sc AI &amp; Automation">B.Sc AI &amp; Automation</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-generate">
+            <span>✦ Generate Welcome Letter ✦</span>
+          </button>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- LETTER SECTION -->
+    <section id="letter-section">
+
+      <div class="letter-card" id="letter-card">
+        <div class="letter-top-stripe"></div>
+
+        <div class="letter-inner">
+
+          <!-- HEADER ROW: Left logos | Center text | Right logos + date -->
+          <div class="univ-header">
+
+            <!-- LEFT: LTSU Logo (formal) -->
+            <div class="header-left">
+              <img src="/images/ltsu-logo.png" alt="LTSU Logo" class="logo-ltsu" />
+            </div>
+
+            <!-- CENTER: University name + letter type -->
+            <div class="header-center">
+              <div class="univ-name-main">LAMRIN TECH SKILLS UNIVERSITY PUNJAB</div>
+              <div class="univ-school-sub">University School of Computing — USoC</div>
+              <div class="letter-type-tag">Official Welcome Letter</div>
+              <div class="letter-date-line">
+                Orientation Date: <strong id="letter-date"></strong>
+              </div>
+            </div>
+
+            <!-- RIGHT: USoC + Events Club logos -->
+            <div class="header-right">
+              <img src="/images/usoc-logo.png" alt="USoC Logo" class="logo-usoc" />
+              <img src="/images/events-logo.png" alt="USoC Events Club" class="logo-events" />
+            </div>
+
+          </div>
+
+          <!-- Gold divider -->
+          <div class="header-divider"></div>
+
+          <!-- Letter Title -->
+          <div class="letter-title">
+            <h2>Welcome to Your Academic Journey</h2>
+            <span class="gold-underline"></span>
+          </div>
+
+          <!-- Letter Body -->
+          <div class="letter-body" id="letter-body-content"></div>
+
+          <!-- Signature -->
+          <div class="signature-block">
+            <div class="signature-label">With Best Wishes,</div>
+            <div class="signature-name">Team USoC</div>
+            <div class="signature-title">University School of Computing</div>
+            <div class="signature-title">Lamrin Tech Skills University Punjab</div>
+          </div>
+
+          <!-- Footer: Quote + QR -->
+          <div class="letter-footer">
+            <div class="quote-block">
+              <div class="quote-label">✦ Words of Inspiration</div>
+              <div class="quote-text" id="quote-text"></div>
+            </div>
+            <div class="qr-block">
+              <div id="qrcode"></div>
+              <div class="qr-label">Scan to visit<br>USoC Instagram</div>
+            </div>
+          </div>
+
+        </div><!-- /.letter-inner -->
+      </div><!-- /.letter-card -->
+
+      <!-- Action Buttons -->
+      <div class="action-bar no-print">
+        <button class="btn-action btn-print" id="btn-print">🖨 Print Letter</button>
+        <button class="btn-action btn-pdf" id="btn-pdf">⬇ Download PDF</button>
+        <button class="btn-action btn-another" id="btn-another">↩ Generate Another</button>
+      </div>
+
+    </section>
+
+  </div><!-- /.app-wrapper -->
+
+  <!-- LIBRARIES -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="/js/app.js"></script>
+  <script>AOS.init({ duration: 700, once: true, offset: 40 });</script>
+
+</body>
+</html>
