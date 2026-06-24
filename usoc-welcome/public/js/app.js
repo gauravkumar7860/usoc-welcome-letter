@@ -35,7 +35,7 @@ const QUOTES = [
    GET TODAY'S DATE — from system clock
    ============================================================ */
 function getTodayFormatted() {
-  const now = new Date();
+  const now   = new Date();
   const day   = now.getDate();
   const month = now.toLocaleString('en-IN', { month: 'long' });
   const year  = now.getFullYear();
@@ -164,8 +164,8 @@ function renderLetter(data) {
   document.getElementById('quote-text').textContent = `"${randomFrom(QUOTES)}"`;
 
   // Show section
-  letterSection.style.display    = 'block';
-  letterSection.style.animation  = 'slide-up 0.7s cubic-bezier(0.4,0,0.2,1) both';
+  letterSection.style.display   = 'block';
+  letterSection.style.animation = 'slide-up 0.7s cubic-bezier(0.4,0,0.2,1) both';
 
   // Generate QR
   generateQR();
@@ -192,58 +192,39 @@ function renderLetter(data) {
 }
 
 /* ============================================================
-   PRINT
+   PRINT LETTER
    ============================================================ */
 document.getElementById('btn-print').addEventListener('click', () => {
   window.print();
 });
 
 /* ============================================================
-   PDF DOWNLOAD — Full A4, all content included
+   DOWNLOAD PDF
+   Uses browser's native print-to-PDF so fonts, logos, QR
+   and layout are 100% identical to Print Letter — perfect A4.
    ============================================================ */
-document.getElementById('btn-pdf').addEventListener('click', async () => {
-  const btn = document.getElementById('btn-pdf');
-  btn.textContent = '⏳ Generating PDF…';
-  btn.disabled = true;
+document.getElementById('btn-pdf').addEventListener('click', () => {
+  const btn       = document.getElementById('btn-pdf');
+  const actionBar = document.querySelector('.action-bar');
 
-  // Small delay so UI updates
-  await new Promise(r => setTimeout(r, 200));
+  // Show loading state
+  btn.textContent = '⏳ Preparing PDF…';
+  btn.disabled    = true;
 
-  const element = document.getElementById('letter-card');
+  // Hide action buttons so they don't appear in PDF
+  actionBar.style.display = 'none';
 
-  const opt = {
-    margin:      [6, 6, 6, 6],
-    filename:    'USoC_Welcome_Letter.pdf',
-    image:       { type: 'jpeg', quality: 0.98 },
-    html2canvas: {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      letterRendering: true,
-      scrollY: 0,
-      windowWidth: 860
-    },
-    jsPDF: {
-      unit: 'mm',
-      format: 'a4',
-      orientation: 'portrait',
-      compress: true
-    },
-    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-  };
+  // Small delay to let UI update, then trigger print dialog
+  setTimeout(() => {
+    window.print();
 
-  html2pdf()
-    .set(opt)
-    .from(element)
-    .save()
-    .then(() => {
-      btn.innerHTML = '⬇ Download PDF';
-      btn.disabled  = false;
-    })
-    .catch(() => {
-      btn.innerHTML = '⬇ Download PDF';
-      btn.disabled  = false;
-    });
+    // Restore buttons after print dialog closes
+    setTimeout(() => {
+      actionBar.style.display = 'flex';
+      btn.innerHTML           = '⬇ Download PDF';
+      btn.disabled            = false;
+    }, 1500);
+  }, 300);
 });
 
 /* ============================================================
@@ -264,8 +245,8 @@ document.getElementById('btn-another').addEventListener('click', () => {
     document.getElementById('qrcode').innerHTML = '';
 
     formSection.classList.remove('hidden');
-    formSection.style.opacity   = '0';
-    formSection.style.transform = 'translateY(20px)';
+    formSection.style.opacity    = '0';
+    formSection.style.transform  = 'translateY(20px)';
     formSection.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
 
     requestAnimationFrame(() => requestAnimationFrame(() => {
