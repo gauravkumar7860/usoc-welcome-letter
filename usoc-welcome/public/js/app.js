@@ -6,7 +6,7 @@
 /* ============================================================
    GOOGLE SHEETS WEBHOOK URL
    ============================================================ */
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyKI5lmxU3yM8gW_mBlw42DQSBt1f1kKfXAMUCPJhdeJQ9FBsgyrRNd3Ijak0aAuU8e/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbz0y-5G-H63uAPV2W4gQt86VLMIPdDl8DO_hZVOHj1ZbdktM8FmOycW4voRxw8P4vp1/exec';
 
 /* ============================================================
    QUOTES
