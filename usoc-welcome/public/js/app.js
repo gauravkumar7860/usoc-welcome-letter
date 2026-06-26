@@ -4,6 +4,11 @@
  */
 
 /* ============================================================
+   GOOGLE SHEETS WEBHOOK URL
+   ============================================================ */
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyKI5lmxU3yM8gW_mBlw42DQSBt1f1kKfXAMUCPJhdeJQ9FBsgyrRNd3Ijak0aAuU8e/exec';
+
+/* ============================================================
    QUOTES
    ============================================================ */
 const QUOTES = [
@@ -47,11 +52,33 @@ function randomFrom(arr) {
 }
 
 /* ============================================================
+   SAVE TO GOOGLE SHEETS
+   ============================================================ */
+async function saveToSheet(data) {
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:       data.name,
+        fatherName: data.fatherName,
+        gender:     data.gender,
+        course:     data.course
+      })
+    });
+  } catch (err) {
+    // Silent fail — letter still generates even if sheet save fails
+    console.warn('Sheet save failed:', err);
+  }
+}
+
+/* ============================================================
    CONFETTI
    ============================================================ */
 function launchConfetti() {
   if (typeof confetti !== 'function') return;
-  const end    = Date.now() + 3000;
+  const end    = Date.now() + 2800;
   const colors = ['#0B2E63', '#1F5DAA', '#FFD700', '#ffffff', '#4CAF50'];
   (function frame() {
     confetti({ particleCount: 5, angle: 60,  spread: 55, origin: { x: 0 }, colors });
@@ -127,7 +154,7 @@ function buildLetterHTML(data) {
 /* ============================================================
    FORM SUBMIT
    ============================================================ */
-document.getElementById('welcome-form').addEventListener('submit', function (e) {
+document.getElementById('welcome-form').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   const name       = document.getElementById('student-name').value.trim();
@@ -140,6 +167,12 @@ document.getElementById('welcome-form').addEventListener('submit', function (e) 
     return;
   }
 
+  const data = { name, fatherName, gender, course };
+
+  // Save to Google Sheets (runs in background, won't block letter generation)
+  saveToSheet(data);
+
+  // Hide form
   const formSection = document.getElementById('form-section');
   formSection.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
   formSection.style.opacity    = '0';
@@ -147,7 +180,7 @@ document.getElementById('welcome-form').addEventListener('submit', function (e) 
 
   setTimeout(() => {
     formSection.classList.add('hidden');
-    renderLetter({ name, fatherName, gender, course });
+    renderLetter(data);
   }, 400);
 });
 
@@ -200,25 +233,18 @@ document.getElementById('btn-print').addEventListener('click', () => {
 
 /* ============================================================
    DOWNLOAD PDF
-   Uses browser's native print-to-PDF so fonts, logos, QR
-   and layout are 100% identical to Print Letter — perfect A4.
+   Uses browser's native print-to-PDF — identical to Print Letter
    ============================================================ */
 document.getElementById('btn-pdf').addEventListener('click', () => {
   const btn       = document.getElementById('btn-pdf');
   const actionBar = document.querySelector('.action-bar');
 
-  // Show loading state
-  btn.textContent = '⏳ Preparing PDF…';
-  btn.disabled    = true;
-
-  // Hide action buttons so they don't appear in PDF
+  btn.textContent         = '⏳ Preparing PDF…';
+  btn.disabled            = true;
   actionBar.style.display = 'none';
 
-  // Small delay to let UI update, then trigger print dialog
   setTimeout(() => {
     window.print();
-
-    // Restore buttons after print dialog closes
     setTimeout(() => {
       actionBar.style.display = 'flex';
       btn.innerHTML           = '⬇ Download PDF';
